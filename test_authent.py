@@ -3,6 +3,8 @@ import requests
 
 # définition de l'adresse de l'API
 api_address = "fastapi"
+#local
+#api_address = "localhost"
 # port de l'API
 api_port = 8000
 log_file="log_test_authent.log"
@@ -44,9 +46,12 @@ else:
 print(output.format(status_code=status_code, test_status=test_status))
 
 # impression dans un fichier
-if int(os.environ.get('LOG')) == 1:
+if os.environ.get('LOG') == "1":
+    print("je lgo")
     with open(log_file, 'a') as file:
         file.write(output)
+else:
+    print("je log pas")
 
 # requête authent test 2: Bob avec des droits renvoie 200 SUCCESS
 r2 = requests.get(
@@ -85,7 +90,7 @@ else:
 print(output.format(status_code=status_code, test_status=test_status))
 
 # impression dans un fichier
-if int(os.environ.get('LOG')) == 1:
+if os.environ.get('LOG') == "1":
     with open(log_file, 'a') as file:
         file.write(output.format(status_code=status_code, test_status=test_status))
 
@@ -126,6 +131,6 @@ else:
 print(output.format(status_code=status_code, test_status=test_status))
 
 # impression dans un fichier
-if int(os.environ.get('LOG')) == 1:
+if os.environ.get('LOG') == "1":
     with open(log_file, 'a') as file:
         file.write(output.format(status_code=status_code, test_status=test_status))
