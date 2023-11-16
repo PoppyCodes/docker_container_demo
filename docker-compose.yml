@@ -8,18 +8,46 @@ services:
     ports:
       - "8000:8000"
   test_authent:
+    build: ./authent
+    image: image_test_authent_python_fastapi
     depends_on: 
       - fastapi
-    image: image_test_python_fastapi
     container_name: test_authent_container
     environment:
       - LOG=1
-      - TEST_FILE="test_authent.py"
     networks:
       - network_api
     volumes:
-      - .:/usr/src/app
+      - ./logs:/usr/src/app/logs
+    command: tail -F anything
+  test_authorization:
+    depends_on: 
+      - fastapi
+    build: ./authorization
+    image: image_test_authorization_python_fastapi
+    container_name: test_authorization_container
+    environment:
+      - LOG=1
+    networks:
+      - network_api
+    volumes:
+      - ./logs:/usr/src/app/logs
+  test_content:
+    depends_on: 
+      - fastapi
+    build: ./content  
+    image: image_test_content_python_fastapi
+    container_name: test_content_container
+    environment:
+      - LOG=1
+    networks:
+      - network_api
+    volumes:
+      - ./logs:/usr/src/app/logs
     command: tail -F anything
 networks:
  network_api:
   driver: bridge
+
+volumes:
+  logs:
