@@ -1,0 +1,166 @@
+
+============================
+    Content test 1: sentence is positive on V1
+============================
+
+request done at "/v1/sentiment"
+| username="alice"
+| password="wonderland"
+| sentence="life is good"
+
+score=0.4404
+expected result (score is greater than 0) = True
+actual result = True
+
+==>  SUCCESS
+
+
+============================
+    Content test 2: sentence is negative on V1
+============================
+
+request done at "/v1/sentiment"
+| username="alice"
+| password="wonderland"
+| sentence="that sucks"
+
+score=-0.3612
+expected result (score is greater than 0) = False
+actual result = False
+
+==>  SUCCESS
+
+
+============================
+    Content test 3: sentence is positive on V2
+============================
+
+request done at "/v2/sentiment"
+| username="alice"
+| password="wonderland"
+| sentence="life is good"
+
+score=0.4404
+expected result (score is greater than 0) = True
+actual result = True
+
+==>  SUCCESS
+
+
+============================
+    Content test 4: sentence is negative on V2
+============================
+
+request done at "/v2/sentiment"
+| username="alice"
+| password="wonderland"
+| sentence="that sucks"
+
+score=-0.3612
+expected result (score is greater than 0) = False
+actual result = False
+
+==>  SUCCESS
+
+
+============================
+    Authentication test 1
+============================
+
+request done at "/permissions"
+| username="alice"
+| password="wonderland"
+
+expected result = 200
+actual result = 200
+
+==>  SUCCESS
+
+
+============================
+    Authentication test 2
+============================
+
+request done at "/permissions"
+| username="bob"
+| password="builder"
+
+expected result = 200
+actual result = 200
+
+==>  SUCCESS
+
+
+============================
+    Authentication test 3
+============================
+
+request done at "/permissions"
+| username="clementine"
+| password="mandarine"
+
+expected result = 403
+actual result = 403
+
+==>  SUCCESS
+
+
+============================
+    Authorization test 1: user has rights
+============================
+
+request done at "/v1/sentiment"
+| username="alice"
+| password="wonderland"
+| sentence="life is good"
+
+expected result = 200
+actual restult = 200
+
+==>  SUCCESS
+
+
+============================
+    Authorization test 2: user has rights
+============================
+
+request done at "/v1/sentiment"
+| username="bob"
+| password="builder"
+| sentence="life is good"
+
+expected result = 200
+actual restult = 200
+
+==>  SUCCESS
+
+
+============================
+    Authorization test 3: user has rights on V2
+============================
+
+request done at "/v2/sentiment"
+| username="alice"
+| password="wonderland"
+| sentence="life is good"
+
+expected result = 200
+actual restult = 200
+
+==>  SUCCESS
+
+
+============================
+    Authorization test 4: user has no rights
+============================
+
+request done at "/v2/sentiment"
+| username="bob"
+| password="builder"
+| sentence="life is good"
+
+expected result = 403
+actual restult = 403
+
+==>  SUCCESS
+
